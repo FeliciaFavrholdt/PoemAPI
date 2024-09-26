@@ -2,7 +2,7 @@
 GET http://localhost:7007/api/poem
 
 ### Get poem by ID
-GET http://localhost:7007/api/poem/1
+GET http://localhost:7007/api/poem/4
 
 ### Create a new poem
 POST http://localhost:7007/api/poem
@@ -16,7 +16,7 @@ Content-Type: application/json
 }
 
 ### Update a poem
-PUT http://localhost:7007/api/poem/1
+PUT http://localhost:7007/api/poem/13
 Content-Type: application/json
 
 {
@@ -28,4 +28,4 @@ Content-Type: application/json
 }
 
 ### Delete a poem
-DELETE http://localhost:7007/api/poem/1
+DELETE http://localhost:7007/api/poem/3
