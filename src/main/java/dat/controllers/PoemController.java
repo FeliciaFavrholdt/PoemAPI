@@ -1,11 +1,13 @@
 package dat.controllers;
 
+import dat.daos.PoemDAO;
 import dat.dtos.PoemDTO;
 import dat.entities.Poem;
 import dat.services.PoemService;
 import io.javalin.http.Context;
 
 import java.util.List;
+
 
 public class PoemController {
 
@@ -42,21 +44,50 @@ public class PoemController {
 	}
 
 	// POST /poem - Create a new poem
-	public void createPoem (Context context) {
-		Poem newPoem = context.bodyAsClass(Poem.class);
-		PoemDTO poem = poemService.createPoem(newPoem);
-		context.status(201).json(poem);
+	public void createPoem(Context context) {
+		try {
+			// Parse the incoming JSON body into a Poem object
+			Poem newPoem = context.bodyAsClass(Poem.class);
+
+			// Convert the string type field to the Type enum using fromString
+			newPoem.setType(Type.fromString(newPoem.getType().toString()));
+
+			// Call service to create the poem and return as DTO
+			PoemDTO poemDTO = poemService.createPoem(newPoem);
+
+			// Respond with 201 Created and return the new PoemDTO
+			context.status(201).json(poemDTO);
+		} catch (IllegalArgumentException e) {
+			context.status(400).result("Invalid poem type: " + e.getMessage());
+		} catch (Exception e) {
+			context.status(400).result("Error creating poem: " + e.getMessage());
+		}
 	}
 
 	// PUT /poem/{id} - Update an existing poem
-	public void updatePoem (Context context) {
-		Long id = Long.parseLong(context.pathParam("id"));
-		Poem updatedPoem = context.bodyAsClass(Poem.class);
-		PoemDTO poem = poemService.updatePoem(id, updatedPoem);
-		if (poem != null) {
-			context.status(200).json(poem);
-		} else {
-			context.status(404).result("Poem not found");
+	public void updatePoem(Context context) {
+		try {
+			// Get the poem ID from the URL path
+			Long id = Long.parseLong(context.pathParam("id"));
+
+			// Parse the incoming JSON body as an updated Poem object
+			Poem updatedPoem = context.bodyAsClass(Poem.class);
+
+			// Convert the string type field to the Type enum using fromString
+			updatedPoem.setType(Type.fromString(updatedPoem.getType().toString()));
+
+			// Call the service to update the poem and return the updated PoemDTO
+			PoemDTO updatedPoemDTO = poemService.updatePoem(id, updatedPoem);
+
+			if (updatedPoemDTO != null) {
+				context.json(updatedPoemDTO);
+			} else {
+				context.status(404).result("Poem not found");
+			}
+		} catch (IllegalArgumentException e) {
+			context.status(400).result("Invalid poem type: " + e.getMessage());
+		} catch (Exception e) {
+			context.status(400).result("Error updating poem: " + e.getMessage());
 		}
 	}
 

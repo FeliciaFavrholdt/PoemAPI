@@ -29,4 +29,13 @@ public enum Type {
 	FOUND,
 	LIGHT,
 	VISUAL;
+
+	// Method to convert string to enum, making it case-insensitive
+	public static Type fromString(String type) {
+		try {
+			return Type.valueOf(type.toUpperCase()); // Convert to uppercase and match enum
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("Invalid poem type: " + type);
+		}
+	}
 }

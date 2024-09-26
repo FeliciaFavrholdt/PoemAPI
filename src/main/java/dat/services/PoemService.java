@@ -30,28 +30,30 @@ public class PoemService {
 		}
 	}
 
-	public PoemDTO createPoem (Poem poem) {
-		// Call the poemDAO create method and return the PoemDTO
-		return new PoemDTO(poemDAO.create(poem));
+	// Create a new poem and return PoemDTO
+	public PoemDTO createPoem(Poem poem) {
+		Poem createdPoem = poemDAO.create(poem);
+		return new PoemDTO(createdPoem);
 	}
 
+	// Update an existing poem by ID
 	public PoemDTO updatePoem(Long id, Poem updatedPoem) {
 		// Fetch the existing poem by its ID
-		Poem poem = poemDAO.read(id);
+		Poem existingPoem = poemDAO.read(id);
 
 		// If the poem is not found, return null
-		if (poem == null) {
+		if (existingPoem == null) {
 			return null;
 		}
 
-		// Update the existing poem's fields with the new data
-		poem.setTitle(updatedPoem.getTitle());
-		poem.setAuthor(updatedPoem.getAuthor());
-		poem.setPoem(updatedPoem.getPoem());
-		poem.setType(updatedPoem.getType());
+		// Update the fields of the existing poem with the new data
+		existingPoem.setTitle(updatedPoem.getTitle());
+		existingPoem.setAuthor(updatedPoem.getAuthor());
+		existingPoem.setPoem(updatedPoem.getPoem());
+		existingPoem.setType(updatedPoem.getType());
 
 		// Save the updated poem
-		Poem updatedEntity = poemDAO.update(poem);
+		Poem updatedEntity = poemDAO.update(existingPoem);
 
 		// Return the updated PoemDTO
 		return new PoemDTO(updatedEntity);
