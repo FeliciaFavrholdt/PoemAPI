@@ -66,16 +66,8 @@ public class PoemApiApp {
 
 	// Named handler method for the POST /poem route
 	public static void handleCreatePoem(Context context) {
-		context.result("Creating a new poem...");
-
-		// Parse the request body into a Poem object
-		Poem poem = context.bodyAsClass(Poem.class);
-
-		// Call createPoem to save the poem
-		PoemDTO savedPoemDTO = createPoem(poem);
-
-		// Return the saved poem as a response with 201 Created status
-		context.status(201).json(savedPoemDTO);
+		context.result("Creating a new poem");
+		poemController.createPoem(context);
 	}
 
 	// Named handler method for the PUT /poem/{id} route

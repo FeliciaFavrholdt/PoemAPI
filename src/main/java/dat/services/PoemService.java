@@ -31,8 +31,8 @@ public class PoemService {
 	}
 
 	public PoemDTO createPoem (Poem poem) {
-		Poem savedPoem = poemDAO.create(poem);
-		return new PoemDTO(savedPoem);
+		// Call the poemDAO create method and return the PoemDTO
+		return new PoemDTO(poemDAO.create(poem));
 	}
 
 	public PoemDTO updatePoem(Long id, Poem updatedPoem) {

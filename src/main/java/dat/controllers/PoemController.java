@@ -43,14 +43,9 @@ public class PoemController {
 
 	// POST /poem - Create a new poem
 	public void createPoem (Context context) {
-		// Parse the request body to the Poem class
 		Poem newPoem = context.bodyAsClass(Poem.class);
-
-		// Save the poem to the database using the dao
-		PoemDTO savedPoem = poemDAO.create(newPoem);
-
-		// Return the saved poem as a response (with generated ID)
-		context.status(201).json(savedPoem);
+		PoemDTO poem = poemService.createPoem(newPoem);
+		context.status(201).json(poem);
 	}
 
 	// PUT /poem/{id} - Update an existing poem
