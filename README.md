@@ -1,4 +1,4 @@
-# Startcode for Java Deep Dive II week
+# STARTCODE TEMPLATE
 
 Includes: 
 - pom.xml

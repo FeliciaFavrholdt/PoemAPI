@@ -1,0 +1,31 @@
+### Get all poems
+GET http://localhost:7007/api/poem
+
+### Get poem by ID
+GET http://localhost:7007/api/poem/1
+
+### Create a new poem
+POST http://localhost:7007/api/poem
+Content-Type: application/json
+
+{
+  "title": "Poem Title",
+  "author": "Author Name",
+  "content": "Put some poem content here...",
+  "type": "Villanelle"
+}
+
+### Update a poem
+PUT http://localhost:7007/api/poem/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "Updated Villanelle",
+  "author": "Updated Author",
+  "content": "New poem content...",
+  "Type": "Villanelle"
+}
+
+### Delete a poem
+DELETE http://localhost:7007/api/poem/1
